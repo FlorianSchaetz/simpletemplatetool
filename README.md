@@ -10,4 +10,14 @@ Basic use case:
 * (Optionally) enter values for the variables
 * Paste the (automatically copied) result wherever you want it
 
+Possible variable types:
+
+* «currentyear» will automatically be replaced with the current year
+* «something else» will lead to an input field labeled "something else" appearing where you can enter the content for this variable (the name is completely up to you)
+* «boxsomething else» same as above, only the input field will be a textarea, to allow for multi-line texts (happens if you prefix your variable name with "box")
+* «boolsomething else:This text will appear» will lead to a checkbox labeld "something else" appearing, if checked, the text "This text will appear" will be inserted, otherwise nothing will be inserted
+
+![Form without filled fields](http://florian-schaetz.de/projects/templatetool/letter-before.png)
+![Form with filled fields](http://florian-schaetz.de/projects/templatetool/letter-after.png)
+
 Autocompletipm is provided via Awesomplete (http://leaverou.github.io/awesomplete/) by Lea Verou
