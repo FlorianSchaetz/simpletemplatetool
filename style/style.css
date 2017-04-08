@@ -1,0 +1,42 @@
+body > div:nth-child(2) {	
+	margin-bottom: 2px;
+}
+
+body > div {
+	width: 360px;
+	margin-bottom: 5px;
+}
+body > div span {
+	width:150px;
+	display: inline-block;
+}
+body > div select {
+	width:200px;
+}
+body > div input {
+	width:194px;
+}
+
+body > div textarea {
+	width:194px;
+}
+
+#parameters > div {
+	margin: 3px 0px;
+}
+
+div#parameters {
+	border-top:1px;
+	border-top-color: black;
+	border-top-style: dotted;
+	margin-top:2px;
+	padding-top:2px;
+}
+
+body>textarea {
+	position:absolute;
+	left: 380px;
+	width:600px;
+	height:500px;
+	
+}
