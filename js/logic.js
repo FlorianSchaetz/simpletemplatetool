@@ -1,6 +1,8 @@
+'use strict';
+
 function getCategories() {
 	var temp = {};
-	for(i=0; i<data.length; i++) {			
+	for(var i=0; i<data.length; i++) {			
 		temp[data[i].category] = 1;
 	}
 	
@@ -14,7 +16,7 @@ function getCategories() {
 
 function getTemplates(category) {
 	var temp = {};
-	for(i=0; i<data.length; i++) {
+	for(var i=0; i<data.length; i++) {
 		if (data[i].category == category) {
 			temp[data[i].template] = 1;
 		}
@@ -31,7 +33,7 @@ function getTemplates(category) {
 function setCategories() {
 	var categories = getCategories();
 	var select = document.getElementById("categories");
-	for(i=0; i<categories.length; i++) {
+	for(var i=0; i<categories.length; i++) {
 		var opt = document.createElement("option");
 		opt.value = categories[i];
 		opt.textContent = categories[i];
@@ -47,7 +49,7 @@ function setTemplates(category) {
 
 	var templates = getTemplates(category);
 	
-	for(i=0; i<templates.length; i++) {
+	for(var i=0; i<templates.length; i++) {
 		var opt = document.createElement("option");
 		opt.value = templates[i];
 		opt.textContent = templates[i];
@@ -82,7 +84,7 @@ function getSelectedTemplate() {
 
 function getTemplate(category, template) {
 
-	for(i=0; i<data.length; i++) {
+	for(var i=0; i<data.length; i++) {
 		if (data[i].category == category && data[i].template == template) {
 			return data[i];
 		}
@@ -99,10 +101,12 @@ function onTemplateChanged() {
 	var text = postProcessText(content.content);
 	textarea.original = text;
 	
-	setText(text);
+	setText(text);	
 	
 	var shortcut = document.getElementById("shortcut");
 	shortcut.value = content.shortcut;
+	
+	updateText();
 }
 
 function setText(text) {
@@ -120,7 +124,7 @@ function postProcessText(content) {
 		parameters.removeChild(div);
 	}
 
-	var res = content.match(/«.+?»/g);
+	var res = content.match(/«(.|\r|\n)+?»/g);
 	
 	if (res == null) {
 		return content;
@@ -128,7 +132,7 @@ function postProcessText(content) {
 	
 	var temp = {};
 	
-	for(i=0; i<res.length; i++) {
+	for(var i=0; i<res.length; i++) {
 		var name = res[i].substring(1, res[i].length-1);
 		
 		var replacement = null;
@@ -137,7 +141,7 @@ function postProcessText(content) {
 		}
 		if (name === 'currentmonth') {
 			replacement = '' + new Date().getMonth();
-		}
+		}		
 		
 		if (replacement != null) {
 			content = content.replace(res[i], replacement, 'g');
@@ -151,8 +155,7 @@ function postProcessText(content) {
 				label = name.substring(3, name.length);
 			}
 			
-			var span = document.createElement('span');
-			span.innerHTML = label;
+			var span = document.createElement('span');			
 			div.append(span);
 			
 			if (name.startsWith("box")) {
@@ -162,22 +165,39 @@ function postProcessText(content) {
 				};
 				input.name = name;
 				div.append(input);	
-			}else {
+				
+			}
+			else if (name.startsWith("bool")) {
+				var input = document.createElement('input');
+				input.type = "checkbox";
+				var index = name.indexOf(":");
+				label = name.substring(4, index);
+				input.value = name.substring(index+1, name.length);
+				input.name = name;				
+				span.className = "checkbox"
+				div.append(input);	
+				input.oninput= function(event) {
+					updateText(event);
+				};
+			}
+			else {
 				var input = document.createElement('input');
 				input.oninput= function(event) {
 					updateText(event);
 				};
 				input.name = name;
 				div.append(input);	
+				
 			}
 			
-			
 			parameters.append(div);
+			span.innerHTML = label;
+		
 		}
-		
-		
-		
+
 	}
+				
+		
 
 	return content;
 }
@@ -189,30 +209,42 @@ function updateText(event) {
 		return;
 	}
 	
-	var arguments = {};
+	var args = {};
 	
-	for(i=0; i<parameters.childNodes.length; i++) {
+	for(var i=0; i<parameters.childNodes.length; i++) {
 		
 		var input = parameters.childNodes[i].childNodes[1];
 		var name = input.name; 
 		var value = input.value;
-		arguments[name] = value;	
+		
+		if (input.type === 'checkbox') {
+			
+			if (input.checked) {
+				args[name] = value;				
+			} else {
+				args[name] = "";	
+			}
+		}
+		else if (value != null && value != undefined && value.length > 0)  {
+			args[name] = value;				
+		}  
 	}
 	
 	var textarea = document.getElementById("text");
 	var content = textarea.original;
 		
-	for(var name in arguments) {
-		var value = arguments[name];	
-		if (value != null && value != undefined && value.length > 0) {
-			
-			var regex = new RegExp('«' + name + '»', "g");
-			
-			content = content.replace(regex, value);	
+	for(var name in args) {
+		var value = args[name];
+		if (value != null) {
+			content = content.split('«' + name + '»').join(value);	
 		} 
 	}
 	setText(content);
-	event.target.focus();
+	
+	if (event != null && event != undefined) {
+		event.target.focus();	
+	}
+	
 }
 
 function selectAndCopy() {
@@ -245,7 +277,7 @@ function initAutoComplete() {
 	
 	var list = [];
 	
-	for(i=0; i<data.length; i++) {
+	for(var i=0; i<data.length; i++) {
 		
 		if (data[i].shortcut != null && data[i].shortcut != undefined && data[i].shortcut.length > 0) {
 			list.push( data[i].shortcut );
@@ -263,7 +295,7 @@ function initAutoComplete() {
 function onInput() {
 	var input = document.getElementById("input");
 	var value = input.value;
-	for(i=0; i<data.length; i++) {
+	for(var i=0; i<data.length; i++) {
 		var d = data[i];
 		if (d.shortcut === value) {
 			

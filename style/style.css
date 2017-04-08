@@ -6,23 +6,45 @@ body > div {
 	width: 360px;
 	margin-bottom: 5px;
 }
-body > div span {
+body > div > span {
 	width:150px;
 	display: inline-block;
 }
-body > div select {
+body > div > select {
 	width:200px;
 }
-body > div input {
+body > div > input {
 	width:194px;
 }
 
-body > div textarea {
+.awesomplete input {
 	width:194px;
 }
 
 #parameters > div {
 	margin: 3px 0px;
+}
+
+#parameters > div > span {
+	width:150px;
+	display: inline-block;
+}
+
+#parameters > div > span.checkbox {
+	width:330px;
+	display: inline-block;
+}
+
+#parameters > div > input {
+	width:194px;
+}
+
+#parameters > div > input[type=checkbox] {
+	width:20px;
+}
+
+#parameters > div > textarea {
+	width:194px;
 }
 
 div#parameters {

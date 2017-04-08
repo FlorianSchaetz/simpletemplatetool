@@ -10,6 +10,8 @@ var data = [
 	
 	{ category : "test3", template : "And yet Another TestTemplate", content: "Bla Blub Bli Blo Blu", shortcut : "-pfz" },
 	
-	{ category : "test3", template : "And still another TestTemplate", content: "Bla Blub Bli Blo Blu «boxSome Random Text»", shortcut : "-pfz" }
+	{ category : "test3", template : "And still another TestTemplate", content: "Bla Blub Bli Blo Blu «boxSome Random Text»", shortcut : "-pfz" },
+	
+	{ category : "test3", template : "And one more TestTemplate", content: "Bla Blub Bli Blo Blu «boolInsert Some Text:Some Text»", shortcut : "abcd" }
 
 ];
