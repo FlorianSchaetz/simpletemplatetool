@@ -17,7 +17,12 @@ Possible variable types:
 * «boxsomething else» same as above, only the input field will be a textarea, to allow for multi-line texts (happens if you prefix your variable name with "box")
 * «boolsomething else:This text will appear» will lead to a checkbox labeld "something else" appearing, if checked, the text "This text will appear" will be inserted, otherwise nothing will be inserted
 
+A simple example with the variables not yet entered...
+
 ![Form without filled fields](http://florian-schaetz.de/projects/templatetool/letter-before.png)
+
+The same example with the variables entered...
+
 ![Form with filled fields](http://florian-schaetz.de/projects/templatetool/letter-after.png)
 
 Autocompletipm is provided via Awesomplete (http://leaverou.github.io/awesomplete/) by Lea Verou
