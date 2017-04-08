@@ -25,4 +25,4 @@ The same example with the variables entered...
 
 ![Form with filled fields](http://florian-schaetz.de/projects/templatetool/letter-after.png)
 
-Autocompletipm is provided via Awesomplete (http://leaverou.github.io/awesomplete/) by Lea Verou
+Autocompletion is provided via Awesomplete (http://leaverou.github.io/awesomplete/) by Lea Verou
