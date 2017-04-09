@@ -14,8 +14,8 @@ Possible variable types:
 
 * «currentyear» will automatically be replaced with the current year
 * «something else» will lead to an input field labeled "something else" appearing where you can enter the content for this variable (the name is completely up to you)
-* «boxsomething else» same as above, only the input field will be a textarea, to allow for multi-line texts (happens if you prefix your variable name with "box")
-* «boolsomething else:This text will appear» will lead to a checkbox labeld "something else" appearing, if checked, the text "This text will appear" will be inserted, otherwise nothing will be inserted
+* «textarea:something else» same as above, only the input field will be a textarea, to allow for multi-line texts (happens if you prefix your variable name with "textarea:")
+* «boolean:something else:This text will appear» will lead to a checkbox labeld "something else" appearing, if checked, the text "This text will appear" will be inserted, otherwise nothing will be inserted (the format is «boolean:variable name:content»)
 
 A simple example with the variables not yet entered...
 

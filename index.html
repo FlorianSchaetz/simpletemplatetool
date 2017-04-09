@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <title>Simple Template Tool</title>
-    <script type="text/javascript" src="data/data.js"></script>	
+    <meta charset="utf-8">    
+	<title>Simple Template Tool</title>
+	<script type="text/javascript" src="data/data.js"></script>
 	<script type="text/javascript" src="js/logic.js"></script>
 	<script type="text/javascript" src="js/awesomplete.min.js"></script>
 	<link rel="stylesheet" href="style/style.css">
 	<link rel="stylesheet" href="style/awesomplete.css">
   </head>
   <body onload="init()">
-	<textarea id="text" readonly="true" ></textarea>
-	<div><span>Search: </span><input id="input" oninput="onInput()"></input></div>
-	<div><span>Kategorie: </span><select id="categories" onchange="onCategoryChanged()"></select></div>
-	<div><span>Template: </span><select id="templates" onchange="onTemplateChanged()"></select></div>	
+<textarea id="text" readonly="true" ></textarea>
+	<div><span>Suche: </span><input id="search"></input></div>
+	<div><span>Kategorie: </span><select id="categories"></select></div>
+	<div><span>Template: </span><select id="templates"></select></div>	
 	<div><span>Shortcut: </span><input id="shortcut" disabled="true"></input></div>
-	<div id="parameters"></div>		
+	<div id="variables"></div>		
   </body>
 </html> 

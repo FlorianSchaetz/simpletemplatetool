@@ -10,10 +10,10 @@ var data = [
 	
 	{ category : "test3", template : "And yet Another TestTemplate", content: "Bla Blub Bli Blo Blu", shortcut : "-pfz" },
 	
-	{ category : "test3", template : "And still another TestTemplate", content: "Bla Blub Bli Blo Blu «boxSome Random Text»", shortcut : "-pfz" },
+	{ category : "test3", template : "And still another TestTemplate", content: "Bla Blub Bli Blo Blu «textarea:Some Random Text»", shortcut : "-pfz" },
 	
-	{ category : "test3", template : "And one more TestTemplate", content: "Bla Blub Bli Blo Blu «boolInsert Some Text:Some Text»", shortcut : "abcd" },
+	{ category : "test3", template : "And one more TestTemplate", content: "Bla Blub Bli Blo Blu «boolean:Insert Some Text:Some Text»", shortcut : "abcd" },
 	
-	{ category : "Letters", template : "Test Letter", content: "Hello «Recipient»,\r\n\r\nI hope this letter finds you well.\r\n\r\n«boxLetter content»\r\n\r\n«boolInsert Money Reminder:Don't forget: You owe me money!\r\n\r\n\»Yours\r\n\r\n\«My Name»", shortcut : "TestLetter" }
+	{ category : "Letters", template : "Test Letter", content: "Hello «Recipient»,\r\n\r\nI hope this letter finds you well.\r\n\r\n«textarea:Letter content»\r\n\r\n«boolean:Insert Money Reminder:Don't forget: You owe me money!\r\n\r\n\»Yours\r\n\r\n\«My Name»\r\n\r\nP.S. «Recipient», the year is «currentyear»", shortcut : "TestLetter" }
 
 ];

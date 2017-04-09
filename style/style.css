@@ -21,33 +21,38 @@ body > div > input {
 	width:194px;
 }
 
-#parameters > div {
+#variables > div {
 	margin: 3px 0px;
+	border-bottom: 1px;
+	border-bottom-style: dashed;
+	border-bottom-color: lightgray;
 }
 
-#parameters > div > span {
+#variables > div > span {
 	width:150px;
 	display: inline-block;
 }
 
-#parameters > div > span.checkbox {
+#variables > div > span.checkbox-span {
 	width:330px;
 	display: inline-block;
 }
 
-#parameters > div > input {
+#variables > div > input {
 	width:194px;
+	margin-bottom:2px;
 }
 
-#parameters > div > input[type=checkbox] {
+#variables > div > input[type=checkbox] {
 	width:20px;
 }
 
-#parameters > div > textarea {
+#variables > div > textarea {
 	width:194px;
+	margin-bottom:2px;
 }
 
-div#parameters {
+div#variables {
 	border-top:1px;
 	border-top-color: black;
 	border-top-style: dotted;
