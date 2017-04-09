@@ -211,7 +211,10 @@ class BooleanVariable extends Variable {
 		this.input.type = "checkbox";
 		this.input.value = this.value;
 		this.input.variable = this;
-		this.input.oninput = this.onInputInternal;
+		
+		// because Edge doesn't like oninput on checkboxes...
+		this.input.onchange = this.onInputInternal;
+		
 		return this.input;
 	}	
 
