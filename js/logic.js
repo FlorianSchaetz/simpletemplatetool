@@ -312,19 +312,20 @@ class VariableHandler {
 /*
  * This class handles the selection of a template; Once a selection is made, the VariableHandler takes over and works on the text
  */
-class TemplateDataHandler {
+class InputHandler {
 	
-	constructor(variableHandler) {
+	constructor(dataHandler, variableHandler) {
 		this.shortcut = document.getElementById("shortcut");
 		this.search = document.getElementById("search");
-		this.search.dataHandler = this;
+		this.dataHandler = dataHandler;
+		this.search.inputHandler = this;
 		this.search.oninput = this.onSearchInput;
 		this.variableHandler = variableHandler;
 		this.selectCategories = document.getElementById("categories");
-		this.selectCategories.dataHandler = this;
+		this.selectCategories.inputHandler = this;
 		this.selectCategories.onchange = this.onCategoryChanged;
 		this.selectTemplates = document.getElementById("templates");		
-		this.selectTemplates.dataHandler = this;
+		this.selectTemplates.inputHandler = this;
 		this.selectTemplates.onchange = this.onTemplateChanged;
 				
 		this.setCategories();
@@ -357,17 +358,17 @@ class TemplateDataHandler {
 		var shortcut = this.value;
 		for(var i=0; i<data.length; i++) {
 			if (data[i].shortcut === shortcut) {
-				this.dataHandler.selectCategories.value = data[i].category;
-				this.dataHandler.selectCategories.onchange();
-				this.dataHandler.selectTemplates.value = data[i].template;
-				this.dataHandler.selectTemplates.onchange();
+				this.inputHandler.selectCategories.value = data[i].category;
+				this.inputHandler.selectCategories.onchange();
+				this.inputHandler.selectTemplates.value = data[i].template;
+				this.inputHandler.selectTemplates.onchange();
 			}
 		}
 		this.focus();
 	}
 	
 	setCategories() {
-		var categories = this.getCategories();
+		var categories = this.dataHandler.getCategories();
 		for(var i=0; i<categories.length; i++) {
 			var opt = document.createElement("option");
 			opt.value = categories[i];
@@ -391,19 +392,19 @@ class TemplateDataHandler {
 	}
 	
 	onCategoryChanged() {
-		var category = this.dataHandler.getSelectedCategory();
-		this.dataHandler.setTemplates(category);
+		var category = this.inputHandler.getSelectedCategory();
+		this.inputHandler.setTemplates(category);
 	}
 	
 	onTemplateChanged() {
-		var category = this.dataHandler.getSelectedCategory();
-		var template = this.dataHandler.getSelectedTemplate();			
+		var category = this.inputHandler.getSelectedCategory();
+		var template = this.inputHandler.getSelectedTemplate();			
 		
-		var content = this.dataHandler.getTemplate(category, template);
+		var content = this.inputHandler.dataHandler.getTemplate(category, template);
 		
-		this.dataHandler.variableHandler.setText(content.content);
+		this.inputHandler.variableHandler.setText(content.content);
 		
-		this.dataHandler.shortcut.value = content.shortcut;
+		this.inputHandler.shortcut.value = content.shortcut;
 	}
 
 	
@@ -413,7 +414,7 @@ class TemplateDataHandler {
 			this.selectTemplates.remove(0);
 		}
 
-		var templates = this.getTemplates(category);
+		var templates = this.dataHandler.getTemplates(category);
 		
 		for(var i=0; i<templates.length; i++) {
 			var opt = document.createElement("option");
@@ -425,11 +426,24 @@ class TemplateDataHandler {
 		this.selectTemplates.onchange();
 	}
 
+
+}
+
+/*
+ * Provides the Template data from a given array; Mainly intented to allow easy switching to online json sources, etc. by extending
+ *  this class
+ */
+class DirectDataProvider {
 	
+	constructor(data) { 
+		this.data = data;
+	}
+	
+		
 	getCategories() {
 		var temp = {};
-		for(var i=0; i<data.length; i++) {			
-			temp[data[i].category] = 1;
+		for(var i=0; i<this.data.length; i++) {			
+			temp[this.data[i].category] = 1;
 		}
 	
 		var categories = [];
@@ -442,9 +456,9 @@ class TemplateDataHandler {
 	
 	getTemplates(category) {
 		var temp = {};
-		for(var i=0; i<data.length; i++) {
-			if (data[i].category == category) {
-				temp[data[i].template] = 1;
+		for(var i=0; i<this.data.length; i++) {
+			if (this.data[i].category == category) {
+				temp[this.data[i].template] = 1;
 			}
 		}
 		
@@ -457,9 +471,9 @@ class TemplateDataHandler {
 	}	
 	
 	getTemplate(category, template) {
-		for(var i=0; i<data.length; i++) {
-			if (data[i].category == category && data[i].template == template) {
-				return data[i];
+		for(var i=0; i<this.data.length; i++) {
+			if (this.data[i].category == category && this.data[i].template == template) {
+				return this.data[i];
 			}
 		}
 		return null;
@@ -481,11 +495,11 @@ function fixIE() {
 function init() {
 	
 	fixIE();
-	
-	//var str = ;
-		
+			
 	var variableHandler = new VariableHandler(document.getElementById("text"));
 	
-	var dataHandler = new TemplateDataHandler(variableHandler);
+	var dataHandler = new DirectDataProvider(data);
+	
+	var inputHandler = new InputHandler(dataHandler, variableHandler);
 	
 }

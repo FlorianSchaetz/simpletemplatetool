@@ -17,6 +17,10 @@ Possible variable types:
 * «textarea:something else» same as above, only the input field will be a textarea, to allow for multi-line texts (happens if you prefix your variable name with "textarea:")
 * «boolean:something else:This text will appear» will lead to a checkbox labeld "something else" appearing, if checked, the text "This text will appear" will be inserted, otherwise nothing will be inserted (the format is «boolean:variable name:content»)
 
+Note concerning ES6/JavaScript:
+
+The original logic.js file uses ES6 classes; Since IE doesn't support these, there's a compiled version for Internet Explorer (logic.babel.min.js) which is used in the index-IE.html file. So if you are using an Internet Explorer, use this file.
+
 A simple example with the variables not yet entered...
 
 ![Form without filled fields](http://florian-schaetz.de/projects/templatetool/letter-before.png)
