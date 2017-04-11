@@ -287,26 +287,37 @@ class VariableHandler {
 		return modifiedText;
 	}
 	
-	update() {
+	update() {		
 		var text = this.input.original;
 		this.input.value = this.replaceAll(text);
 		this.selectAndCopy();
 	}
 	
 	selectAndCopy() {
-		this.input.select();
+		this.input.select();	
+
+		// this block tries to circumvent a bug that sometimes prevents IE11 from correctly copying the value
+		var isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
+		if (isIE11) {
+			setTimeout( this.copy, 0);
+		} else {
+			this.copy();
+		}
+	}
 	
+	copy() {
 		try {
 			var successful = document.execCommand('copy');
 			if (successful) {
 				this.input.selectionStart  = -1;
 				this.input.selectionEnd  = -1;
+			} else {
+				console.log('Oops, Copy failed, sorry about that.');	
 			}				
 		} catch (err) {
-			console.log('Oops, unable to copy');
+			console.log('Oops, unable to copy, sorry about that.');
 		}
 	}
-	
 }
 
 /*
@@ -437,6 +448,14 @@ class DirectDataProvider {
 	
 	constructor(data) { 
 		this.data = data;
+		this.map = {};
+		
+		for(var i=0; i<this.data.length; i++) {
+			var d = data[i];
+			var category = d.category;
+			var template = d.template;
+			this.map[category + ':' + template] = d.content;
+		}
 	}
 	
 		
@@ -470,12 +489,15 @@ class DirectDataProvider {
 		return templates;
 	}	
 	
-	getTemplate(category, template) {
+	getTemplate(category, template) {		
+		
 		for(var i=0; i<this.data.length; i++) {
 			if (this.data[i].category == category && this.data[i].template == template) {
+				console.timeEnd('someFunction');
 				return this.data[i];
 			}
 		}
+		
 		return null;
 	}	
 }

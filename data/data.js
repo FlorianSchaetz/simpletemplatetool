@@ -1,6 +1,10 @@
 var data = [
 
 	{ category : "keine", template : "Einführung", content: "Hier Einführungstext" },
+	
+		{ category : "keine", template : "No text just variables", content: "«voller Name»" },
+		
+		{ category : "keine", template : "No text just boolean variables", content: "«boolean:click me:Some random text\r\nwith two lines»«boolean:click me too:\r\nSome other random text\r\nwith two lines»" },
 
 	{ category : "Briefe", template : "Brief an Herr XYZ", content: "Sehr geehrter Herr «voller Name»,\n bla bla bla\n Es geht um «Betrag» €. \n mfG \n (C) 2008-«currentyear»", shortcut : "-pf" },
 	
@@ -10,7 +14,7 @@ var data = [
 	
 	{ category : "test3", template : "And yet Another TestTemplate", content: "Bla Blub Bli Blo Blu", shortcut : "-pfz" },
 	
-	{ category : "test3", template : "And still another TestTemplate", content: "Bla Blub Bli Blo Blu «textarea:Some Random Text»", shortcut : "-pfz" },
+	{ category : "test3", template : "And still another TestTemplate", content: "Bla Blub Bli Blo Blu «textarea:Some Random Text»", shortcut : "-pfa" },
 	
 	{ category : "test3", template : "And one more TestTemplate", content: "Bla Blub Bli Blo Blu «boolean:Insert Some Text:Some Text»", shortcut : "abcd" },
 	
