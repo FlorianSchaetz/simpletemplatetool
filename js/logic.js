@@ -32,14 +32,21 @@ class VariableFactory {
 	createVariables(expressions) {
 		
 		// To prevent us from creating more than one variable for a repeated expression
-		var knownExpressions = {};
+		var knownVariables = {};
 		
 		var variables = [];
 		for(var i=0; i<expressions.length; i++) {
 	
-			if (knownExpressions[expressions[i]] != true) {
-				knownExpressions[expressions[i]] = true;
-				variables.push( this.createVariable(expressions[i]));
+			var variable = this.createVariable(expressions[i]);
+			
+			if(knownVariables[variable.getName()] != undefined) {				
+				variable = knownVariables[variable.getName()].handleDuplicate(variable);				
+				if (variable != null) {
+					variables.push(variable);	
+				}				
+			} else {
+				knownVariables[variable.getName()] = variable;
+				variables.push(variable);	
 			}
 		}
 		return variables;
@@ -77,6 +84,7 @@ class Variable {
 	constructor(expression) {
 		this.expression = expression;
 		this.name = this.expression.substring(1, this.expression.length-1);
+		this.type = "Variable";
 	}
 	
 	/*
@@ -132,6 +140,11 @@ class Variable {
 	getSpanClassName() {
 		return null;
 	}
+	
+	handleDuplicate(variable) {
+		return null;
+	}
+	
 }
 
 /*
@@ -142,6 +155,7 @@ class AutoVariable extends Variable {
 	constructor(expression, content) {
 		super(expression);
 		this.content = content;
+		this.type = "AutoVariable";
 	}
 	
 	isEnterable() {
@@ -166,6 +180,7 @@ class TextareaVariable extends Variable {
 	constructor(expression) {
 		super(expression);
 		this.name = this.expression.substring('«textarea:'.length, this.expression.length-1);
+		this.type = "TextareaVariable";
 	}
 	
 	createInput() {
@@ -192,6 +207,7 @@ class BooleanVariable extends Variable {
 	 */
 	constructor(expression) {
 		super(expression);
+		this.type = "BooleanVariable";
 		
 		var indexOfName = this.expression.indexOf(':');		
 		var indexOfContent = this.expression.indexOf(':', indexOfName+1);
@@ -221,6 +237,44 @@ class BooleanVariable extends Variable {
 	getSpanClassName() {
 		return "checkbox-span";
 	}	
+	
+	handleDuplicate(variable) {		
+		var additionalBooleanVariable = new AdditionalBooleanVariable(variable.expression);
+		additionalBooleanVariable.setParentBoolean(this);
+		return additionalBooleanVariable;		
+	}
+}
+
+class AdditionalBooleanVariable extends Variable {
+	
+	constructor(expression) {
+		super(expression);
+		this.type = "BooleanVariable";
+		
+		var indexOfName = this.expression.indexOf(':');		
+		var indexOfContent = this.expression.indexOf(':', indexOfName+1);
+		this.name = this.expression.substring(indexOfName+1, indexOfContent);	
+		this.content = this.expression.substring(indexOfContent+1, this.expression.length-1);		
+	}
+	
+	setParentBoolean(booleanVariable) {
+		this.parent = booleanVariable;
+	}
+	
+	getContent() {
+		if (this.parent.input.checked) {
+			return this.content;	
+		}
+		return '';
+	}
+	
+	isEnterable() {
+		return false;
+	}
+	
+	createInput() {
+		return null;
+	}
 }
 
 /*
